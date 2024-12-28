@@ -4,10 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start:prod": "node ./dist/server.js",
     "start:dev": "npx ts-node-dev --respawn --transpile-only src/server.ts",
-    "build": "tsc"
+    "lint": "eslint src --ignore-path .eslintignore --ext .ts",
+    "build": "tsc",
+    "lint:fix": " npx eslint src --fix",
+    "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
+    "prettier:fix": "npx prettier --write src",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
@@ -28,7 +32,9 @@
     "@typescript-eslint/eslint-plugin": "^8.18.2",
     "@typescript-eslint/parser": "^8.18.2",
     "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
     "globals": "^15.14.0",
+    "prettier": "^3.4.2",
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.18.2"
   }
