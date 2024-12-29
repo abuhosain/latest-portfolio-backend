@@ -4,7 +4,7 @@ import validateRequest from '../../middleware/validateRequest'
 import { AuthValidation } from './auth.validation'
 const router = express.Router()
 
-// singin in login
+// signup login
 router.post(
   '/signup',
   AuthControllers.singupUser,
@@ -12,10 +12,10 @@ router.post(
 )
 
 // singin in login
-router.post(
-  '/login',
-  AuthControllers.loginUser,
-  validateRequest(AuthValidation.loginValidationSchema),
-)
+// router.post(
+//   '/login',
+//   AuthControllers.loginUser,
+//   validateRequest(AuthValidation.loginValidationSchema),
+// )
 
 export const AuthRoutes = router;
