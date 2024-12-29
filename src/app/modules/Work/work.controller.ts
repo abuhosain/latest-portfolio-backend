@@ -7,8 +7,9 @@ import { WorkServices } from './work.services'
 // Controller to add a new work entry
 const addWork = catchAsync(async (req: Request, res: Response) => {
   const workData = req.body
+  const file = req.file
   // Call the service to add the work to the database
-  const result = await WorkServices.addWorkToDb(workData)
+  const result = await WorkServices.addWorkToDb(workData, file)
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,
@@ -44,7 +45,8 @@ const getWorkById = catchAsync(async (req: Request, res: Response) => {
 const updateWork = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params
   const workData = req.body
-  const result = await WorkServices.updateWorkInDb(id, workData)
+  const file = req.file
+  const result = await WorkServices.updateWorkInDb(id, workData, file)
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -52,7 +54,6 @@ const updateWork = catchAsync(async (req: Request, res: Response) => {
     data: result,
   })
 })
-
 // Controller to delete a work entry by ID
 const deleteWork = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params

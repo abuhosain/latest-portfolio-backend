@@ -3,10 +3,14 @@ import { Work } from './work.model'
 import AppError from '../../errors/AppError'
 import httpStatus from 'http-status'
 
-// Create a new work entry
-const addWorkToDb = async (payload: IWork) => {
-  const workData = new Work(payload)
-  const result = await workData.save()
+const addWorkToDb = async (payload: any, file: any) => {
+  const workData = {
+    ...payload,
+    image: file?.path,
+  }
+
+  // Save the work data in the database
+  const result = await Work.create(workData)
   return result
 }
 
@@ -25,13 +29,15 @@ const getWorkByIdFromDb = async (id: string) => {
   return work
 }
 
-// Update a work entry by ID
-const updateWorkInDb = async (id: string, payload: IWork) => {
-  const updatedWork = await Work.findByIdAndUpdate(id, payload, { new: true })
-  if (!updatedWork) {
-    throw new AppError(httpStatus.NOT_FOUND, 'Work not found')
+const updateWorkInDb = async (id: string, payload: any, file: any) => {
+  const updatedData = {
+    ...payload,
+    image: file?.path,
   }
-  return updatedWork
+
+  // Update the work entry by its ID
+  const result = await Work.findByIdAndUpdate(id, updatedData, { new: true })
+  return result
 }
 
 // Delete a work entry by ID
