@@ -4,10 +4,11 @@ import catchAsync from '../../utils/catchAsynch'
 import { JourneyServices } from './journey.services'
 import sendResponse from '../../utils/sendResponse'
 
-// Controller for adding an experience
 const addExperience = catchAsync(async (req: Request, res: Response) => {
-  const payload = req.body
-  const result = await JourneyServices.addExperienceToDb(payload)
+  const experienceData = req.body
+  const file = req.file
+  // Call the service to add the experience to the database
+  const result = await JourneyServices.addExperienceToDb(experienceData, file)
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,
@@ -28,10 +29,13 @@ const addSkill = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
-// Controller for adding education
 const addEducation = catchAsync(async (req: Request, res: Response) => {
-  const payload = req.body
-  const result = await JourneyServices.addEducationToDb(payload)
+  const educationData = req.body
+  const file = req.file
+
+  // Call the service to add the education to the database
+  const result = await JourneyServices.addEducationToDb(educationData, file)
+
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,

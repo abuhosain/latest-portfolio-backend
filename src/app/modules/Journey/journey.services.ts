@@ -2,15 +2,15 @@ import httpStatus from 'http-status'
 import AppError from '../../errors/AppError'
 import { Journey } from './jorney.model'
 
-// Create functions for different types
-export const addExperienceToDb = async (payload: any) => {
-  if (payload.type !== 'experience') {
-    throw new AppError(
-      httpStatus.BAD_REQUEST,
-      'Invalid type for experience entry',
-    )
+const addExperienceToDb = async (payload: any, file: any) => {
+  const experienceData = {
+    ...payload,
+    logoUrl: file?.path,
   }
-  return await Journey.create(payload)
+
+  // Save the experience data in the database
+  const result = await Journey.create(experienceData)
+  return result
 }
 
 export const addSkillToDb = async (payload: any) => {
@@ -20,16 +20,16 @@ export const addSkillToDb = async (payload: any) => {
   return await Journey.create(payload)
 }
 
-export const addEducationToDb = async (payload: any) => {
-  if (payload.type !== 'education') {
-    throw new AppError(
-      httpStatus.BAD_REQUEST,
-      'Invalid type for education entry',
-    )
+const addEducationToDb = async (payload: any, file: any) => {
+  const educationData = {
+    ...payload,
+    logoUrl: file?.path,  
   }
-  return await Journey.create(payload)
-}
 
+   
+  const result = await Journey.create(educationData)
+  return result
+}
 // Shared function to get all entries
 export const getAllJourneys = async () => {
   return await Journey.find()
