@@ -9,10 +9,6 @@ const journeySchema = new Schema<IJourney>(
       enum: ['experience', 'education', 'skill'],
       required: true,
     },
-    title: {
-      type: String,
-      required: true,
-    },
     logoUrl: {
       type: String,
       required: true,

@@ -1,6 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express'
 import { JourneyControllers } from './journey.controller'
-import validateRequest from '../../middleware/validateRequest'
 import { multerUpload } from '../../config/multer.config'
 import AppError from '../../errors/AppError'
 import httpStatus from 'http-status'
@@ -43,12 +42,12 @@ router.post(
   JourneyControllers.addEducation, // Call controller to add experience
 )
 // Get All Journeys (Experience, Skills, Education)
-router.get('/journeys', JourneyControllers.getAllJourneys)
+router.get('/', JourneyControllers.getAllJourneys)
 
 // Update Journey (Experience, Skill, Education)
-router.put('/journey/:id', JourneyControllers.updateJourney)
+router.put('/:id', JourneyControllers.updateJourney)
 
 // Delete Journey (Experience, Skill, Education)
-router.delete('/journey/:id', JourneyControllers.deleteJourney)
+router.delete('/:id', JourneyControllers.deleteJourney)
 
 export const JourneyRoutes = router

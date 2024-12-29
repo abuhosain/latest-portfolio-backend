@@ -1,7 +1,6 @@
  
 export interface IJourney {
     type: 'experience' | 'education' | 'skill';
-    title: string; 
     logoUrl: string;
     duration: string;
     description: string;
