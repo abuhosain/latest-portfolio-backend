@@ -3,10 +3,10 @@ import httpStatus from 'http-status';
 import { JwtPayload } from 'jsonwebtoken';
 import config from '../config';
 import AppError from '../errors/AppError';
-import { USER_ROLE } from '../modules/Auth/auth.constance';
-import catchAsync from '../utils/catchAsynch';
-import { verifyToken } from '../modules/Auth/auth.utils';
 import { User } from '../modules/Auth/auth.model';
+import { USER_ROLE } from '../modules/Auth/auth.constance';
+import { verifyToken } from '../modules/Auth/auth.utils';
+import catchAsync from '../utils/catchAsynch';
  
 
 const auth = (...requiredRoles: (keyof typeof USER_ROLE)[]) => {
