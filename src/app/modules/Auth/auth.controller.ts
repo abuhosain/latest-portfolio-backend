@@ -14,6 +14,6 @@ const singupUser = catchAsync(async (req, res) => {
   })
 })
 
-export const AuthController = {
+export const AuthControllers = {
   singupUser,
 }
