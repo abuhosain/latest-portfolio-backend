@@ -2,7 +2,7 @@ import httpStatus from 'http-status'
 import AppError from '../../errors/AppError'
 import { ILoginUser, IUser } from './auth.interface'
 import { User } from './auth.model'
-import { createToken } from './auth.utils'
+import { createToken, verifyToken } from './auth.utils'
 import config from '../../config'
 
 const signUpUserIntoDb = async (payload: IUser) => {
@@ -55,7 +55,44 @@ const loginUser = async (payload: ILoginUser) => {
   }
 }
 
+const refreshToken = async (token: string) => {
+  // checking if the given token is valid
+  const decoded = verifyToken(token, config.jwt_refresh_secret as string)
+
+  const { email, iat } = decoded
+  // checking if the user is exist
+  const user = await User.isUserExistsByEmail(email)
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !')
+  }
+
+  if (
+    user.passwordChangedAt &&
+    User.isJWTIssuedBeforePasswordChanged(user.passwordChangedAt, iat as number)
+  ) {
+    throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized !')
+  }
+
+  const jwtPayload = {
+    email: user?.email,
+    role: user?.role,
+    name: user?.name,
+  }
+
+  const accessToken = createToken(
+    jwtPayload,
+    config.jwt_access_secret as string,
+    config.jwt_access_expire_in as string,
+  )
+
+  return {
+    accessToken,
+  }
+}
+
 export const AuthServices = {
   signUpUserIntoDb,
   loginUser,
+  refreshToken
 }
