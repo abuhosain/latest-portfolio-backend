@@ -3,7 +3,6 @@ import { Types } from 'mongoose'
 
 export const createToken = (
   jwtPayload: {
-    id: Types.ObjectId
     email: string
     role: string
     name: string
