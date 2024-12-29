@@ -3,6 +3,8 @@ import { BlogControllers } from './blog.controller'
 import { multerUpload } from '../../config/multer.config'
 import AppError from '../../errors/AppError'
 import httpStatus from 'http-status'
+import { USER_ROLE } from '../Auth/auth.constance'
+import auth from '../../middleware/auth'
 
 const router = express.Router()
 router.post(
@@ -18,6 +20,7 @@ router.post(
     req.body = JSON.parse(req.body.data)
     next()
   },
+  auth(USER_ROLE.admin),
   BlogControllers.createBlog,
 )
 
@@ -35,10 +38,11 @@ router.put(
     }
     next()
   },
+  auth(USER_ROLE.admin),
   BlogControllers.updateBlog,
 )
 router.get('/', BlogControllers.getAllBlogs)
 router.get('/:id', BlogControllers.getBlogById)
-router.delete('/:id', BlogControllers.deleteBlog)
+router.delete('/:id', auth(USER_ROLE.admin), BlogControllers.deleteBlog)
 
 export const BlogRoutes = router
