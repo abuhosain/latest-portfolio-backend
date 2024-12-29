@@ -3,13 +3,15 @@ import { WorkControllers } from './work.controller'
 import { multerUpload } from '../../config/multer.config'
 import AppError from '../../errors/AppError'
 import httpStatus from 'http-status'
+import auth from '../../middleware/auth'
+import { USER_ROLE } from '../Auth/auth.constance'
 
 const router = express.Router()
 
 // Route for adding new work entry
 router.post(
   '/',
-  multerUpload.single('file'), // Upload file (e.g., logo image for the work)
+  multerUpload.single('file'),  
   (req: Request, res: Response, next: NextFunction) => {
     if (!req.file) {
       throw new AppError(
@@ -17,10 +19,11 @@ router.post(
         'No logo image uploaded for work',
       )
     }
-    req.body = JSON.parse(req.body.data) // Parse the JSON data for work details
+    req.body = JSON.parse(req.body.data)  
     next()
   },
-  WorkControllers.addWork, // Call the controller to add a new work entry
+  auth(USER_ROLE.admin),
+  WorkControllers.addWork, 
 )
 
 // Route for getting all work entries
@@ -32,7 +35,7 @@ router.get('//:id', WorkControllers.getWorkById)
 // Route for updating a work entry by ID
 router.put(
   '/:id',
-  multerUpload.single('file'), // Upload file for updating work details
+  multerUpload.single('file'),  
   (req: Request, res: Response, next: NextFunction) => {
     if (!req.file) {
       throw new AppError(
@@ -40,13 +43,14 @@ router.put(
         'No logo image uploaded for work update',
       )
     }
-    req.body = JSON.parse(req.body.data) // Parse the JSON data for work details
+    req.body = JSON.parse(req.body.data) 
     next()
   },
-  WorkControllers.updateWork, // Call the controller to update the work entry
+  auth(USER_ROLE.admin),
+  WorkControllers.updateWork,  
 )
 
 // Route for deleting a work entry by ID
-router.delete('/:id', WorkControllers.deleteWork)
+router.delete('/:id', auth(USER_ROLE.admin), WorkControllers.deleteWork)
 
 export const WorkRoutes = router
