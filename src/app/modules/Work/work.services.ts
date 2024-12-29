@@ -30,11 +30,13 @@ const getWorkByIdFromDb = async (id: string) => {
 }
 
 const updateWorkInDb = async (id: string, payload: any, file: any) => {
-  const updatedData = {
-    ...payload,
-    image: file?.path,
+  let updatedData = payload
+  if (file?.path) {
+    updatedData = {
+      ...payload,
+      image: file?.path,
+    }
   }
-
   // Update the work entry by its ID
   const result = await Work.findByIdAndUpdate(id, updatedData, { new: true })
   return result
