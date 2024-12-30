@@ -27,6 +27,12 @@ const journeySchema = new Schema<IJourney>(
         return this.type === 'experience'
       },
     },
+    position: {
+      type: String,
+      required: function () {
+        return this.type === 'experience'
+      },
+    },
     institution: {
       type: String,
       required: function () {

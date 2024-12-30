@@ -6,4 +6,5 @@ export interface IJourney {
   company?: string
   institution?: string
   icon?: string
+  position? : string
 }
