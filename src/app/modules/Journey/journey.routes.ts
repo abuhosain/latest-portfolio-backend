@@ -49,6 +49,9 @@ router.post(
 router.get('/', JourneyControllers.getAllJourneys)
 
 // Update Journey (Experience, Skill, Education)
+router.get('/:id', JourneyControllers.getSingleJourney)
+
+// Update Journey (Experience, Skill, Education)
 router.put('/:id', auth(USER_ROLE.admin), JourneyControllers.updateJourney)
 
 // Delete Journey (Experience, Skill, Education)

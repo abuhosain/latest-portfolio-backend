@@ -23,16 +23,19 @@ export const addSkillToDb = async (payload: any) => {
 const addEducationToDb = async (payload: any, file: any) => {
   const educationData = {
     ...payload,
-    logoUrl: file?.path,  
+    logoUrl: file?.path,
   }
 
-   
   const result = await Journey.create(educationData)
   return result
 }
 // Shared function to get all entries
 export const getAllJourneys = async () => {
   return await Journey.find()
+}
+
+export const getSingleJourney = async (id: string) => {
+  return await Journey.findById(id)
 }
 
 // Shared function to update an entry
@@ -63,5 +66,6 @@ export const JourneyServices = {
   addSkillToDb,
   getAllJourneys,
   updateJourneyInDb,
+  getSingleJourney,
   deleteJourneyFromDb,
 }

@@ -54,6 +54,17 @@ const getAllJourneys = catchAsync(async (_req: Request, res: Response) => {
     data: result,
   })
 })
+// Controller for retrieving all entries
+const getSingleJourney = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params
+  const result = await JourneyServices.getSingleJourney(id)
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Journeys retrieved successfully',
+    data: result,
+  })
+})
 
 // Controller for updating an entry
 const updateJourney = catchAsync(async (req: Request, res: Response) => {
@@ -87,4 +98,5 @@ export const JourneyControllers = {
   deleteJourney,
   updateJourney,
   getAllJourneys,
+  getSingleJourney
 }
