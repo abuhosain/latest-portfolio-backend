@@ -52,7 +52,18 @@ router.get('/', JourneyControllers.getAllJourneys)
 router.get('/:id', JourneyControllers.getSingleJourney)
 
 // Update Journey (Experience, Skill, Education)
-router.put('/:id', auth(USER_ROLE.admin), JourneyControllers.updateJourney)
+router.put(
+  '/:id',
+  multerUpload.single('file'),  
+  (req: Request, res: Response, next: NextFunction) => {
+    
+    req.body = JSON.parse(req.body.data) 
+    next()
+  },
+  auth(USER_ROLE.admin),
+  JourneyControllers.updateJourney,  
+)
+
 
 // Delete Journey (Experience, Skill, Education)
 router.delete('/:id', auth(USER_ROLE.admin), JourneyControllers.deleteJourney)

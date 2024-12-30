@@ -39,16 +39,21 @@ export const getSingleJourney = async (id: string) => {
 }
 
 // Shared function to update an entry
-export const updateJourneyInDb = async (id: string, payload: any) => {
-  const journey = await Journey.findByIdAndUpdate(
-    id,
-    { $set: payload },
-    { new: true, runValidators: true },
-  )
-  if (!journey) {
-    throw new AppError(httpStatus.NOT_FOUND, 'Journey entry not found')
+export const updateJourneyInDb = async (
+  id: string,
+  payload: any,
+  file: any,
+) => {
+  let updatedData = payload
+  if (file?.path) {
+    updatedData = {
+      ...payload,
+      logoUrl: file?.path,
+    }
   }
-  return journey
+  // Update the work entry by its ID
+  const result = await Journey.findByIdAndUpdate(id, updatedData, { new: true })
+  return result
 }
 
 // Shared function to delete an entry

@@ -68,9 +68,9 @@ const getSingleJourney = catchAsync(async (req: Request, res: Response) => {
 
 // Controller for updating an entry
 const updateJourney = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params
-  const payload = req.body
-  const result = await JourneyServices.updateJourneyInDb(id, payload)
+  const { id } = req.params;
+  const payload = req.body;
+  const result = await JourneyServices.updateJourneyInDb(id, payload, req.file)
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

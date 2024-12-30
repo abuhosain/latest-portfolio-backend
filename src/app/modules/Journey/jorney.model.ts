@@ -39,6 +39,12 @@ const journeySchema = new Schema<IJourney>(
         return this.type === 'education'
       },
     },
+    qualification: {
+      type: String,
+      required: function () {
+        return this.type === 'education'
+      },
+    },
     icon: {
       type: String,
       required: function () {

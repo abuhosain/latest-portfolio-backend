@@ -7,4 +7,5 @@ export interface IJourney {
   institution?: string
   icon?: string
   position? : string
+  qualification? : string
 }
