@@ -13,11 +13,14 @@ const addExperienceToDb = async (payload: any, file: any) => {
   return result
 }
 
-export const addSkillToDb = async (payload: any) => {
-  if (payload.type !== 'skill') {
-    throw new AppError(httpStatus.BAD_REQUEST, 'Invalid type for skill entry')
+export const addSkillToDb = async (payload: any, file : any) => {
+  const educationData = {
+    ...payload,
+    icon: file?.path,
   }
-  return await Journey.create(payload)
+
+  const result = await Journey.create(educationData)
+  return result
 }
 
 const addEducationToDb = async (payload: any, file: any) => {
@@ -45,12 +48,24 @@ export const updateJourneyInDb = async (
   file: any,
 ) => {
   let updatedData = payload
-  if (file?.path) {
-    updatedData = {
-      ...payload,
-      logoUrl: file?.path,
+
+  const journey = await Journey.findById(id)
+  if (journey?.type === 'skill') {
+    if (file?.path) {
+      updatedData = {
+        ...payload,
+        icon: file?.path,
+      }
+    }
+  } else {
+    if (file?.path) {
+      updatedData = {
+        ...payload,
+        logoUrl: file?.path,
+      }
     }
   }
+
   // Update the work entry by its ID
   const result = await Journey.findByIdAndUpdate(id, updatedData, { new: true })
   return result

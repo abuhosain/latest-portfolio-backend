@@ -6,7 +6,7 @@ import sendResponse from '../../utils/sendResponse'
 
 const addExperience = catchAsync(async (req: Request, res: Response) => {
   const experienceData = req.body
-  const file = req.file
+  const file = req?.file;
   // Call the service to add the experience to the database
   const result = await JourneyServices.addExperienceToDb(experienceData, file)
   sendResponse(res, {
@@ -19,8 +19,9 @@ const addExperience = catchAsync(async (req: Request, res: Response) => {
 
 // Controller for adding a skill
 const addSkill = catchAsync(async (req: Request, res: Response) => {
-  const payload = req.body
-  const result = await JourneyServices.addSkillToDb(payload)
+  const payload = req.body;
+  const file = req?.file;
+  const result = await JourneyServices.addSkillToDb(payload, file)
   sendResponse(res, {
     statusCode: httpStatus.CREATED,
     success: true,

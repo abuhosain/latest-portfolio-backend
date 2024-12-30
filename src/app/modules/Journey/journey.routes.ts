@@ -25,8 +25,26 @@ router.post(
   auth(USER_ROLE.admin),
   JourneyControllers.addExperience, // Call controller to add experience
 )
+
+// Route for adding experience
+router.post(
+  '/skill',
+  multerUpload.single('file'),
+  (req: Request, res: Response, next: NextFunction) => {
+    if (!req.file) {
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        'No logo image uploaded for skill',
+      )
+    }
+    req.body = JSON.parse(req.body.data) // Parse the JSON data for experience details
+    next()
+  },
+  auth(USER_ROLE.admin),
+  JourneyControllers.addSkill, // Call controller to add experience
+)
 // Add Skill
-router.post('/skill', auth(USER_ROLE.admin), JourneyControllers.addSkill)
+// router.post('/skill', auth(USER_ROLE.admin), JourneyControllers.addSkill)
 
 // Route for adding experience
 router.post(
@@ -54,16 +72,14 @@ router.get('/:id', JourneyControllers.getSingleJourney)
 // Update Journey (Experience, Skill, Education)
 router.put(
   '/:id',
-  multerUpload.single('file'),  
+  multerUpload.single('file'),
   (req: Request, res: Response, next: NextFunction) => {
-    
-    req.body = JSON.parse(req.body.data) 
+    req.body = JSON.parse(req.body.data)
     next()
   },
   auth(USER_ROLE.admin),
-  JourneyControllers.updateJourney,  
+  JourneyControllers.updateJourney,
 )
-
 
 // Delete Journey (Experience, Skill, Education)
 router.delete('/:id', auth(USER_ROLE.admin), JourneyControllers.deleteJourney)
