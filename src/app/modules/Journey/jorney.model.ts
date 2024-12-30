@@ -11,7 +11,6 @@ const journeySchema = new Schema<IJourney>(
     },
     logoUrl: {
       type: String,
-      required: true,
     },
     duration: {
       type: String,
@@ -46,6 +45,12 @@ const journeySchema = new Schema<IJourney>(
       },
     },
     icon: {
+      type: String,
+      required: function () {
+        return this.type === 'skill'
+      },
+    },
+    name: {
       type: String,
       required: function () {
         return this.type === 'skill'

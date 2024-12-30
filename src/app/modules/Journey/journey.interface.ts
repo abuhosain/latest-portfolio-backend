@@ -1,6 +1,6 @@
 export interface IJourney {
   type: 'experience' | 'education' | 'skill'
-  logoUrl: string
+  logoUrl?: string
   duration: string
   description: string
   company?: string
@@ -8,4 +8,5 @@ export interface IJourney {
   icon?: string
   position? : string
   qualification? : string
+  name? : string
 }
