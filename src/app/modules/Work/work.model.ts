@@ -16,9 +16,11 @@ const workSchema = new Schema<IWork>(
       type: String,
       required: true,
     },
-    githubLink: {
+    frontend: {
       type: String,
-      required: true,
+    },
+    backedend: {
+      type: String,
     },
     liveLink: {
       type: String,
