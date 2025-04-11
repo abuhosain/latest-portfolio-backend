@@ -19,7 +19,7 @@ const workSchema = new Schema<IWork>(
     frontend: {
       type: String,
     },
-    backedend: {
+    backend: {
       type: String,
     },
     liveLink: {

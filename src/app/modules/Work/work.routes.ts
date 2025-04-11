@@ -30,19 +30,14 @@ router.post(
 router.get('/', WorkControllers.getAllWorks)
 
 // Route for getting a work entry by ID
-router.get('//:id', WorkControllers.getWorkById)
+router.get('/:id', WorkControllers.getWorkById)
 
 // Route for updating a work entry by ID
 router.put(
   '/:id',
   multerUpload.single('file'),  
   (req: Request, res: Response, next: NextFunction) => {
-    if (!req.file) {
-      throw new AppError(
-        httpStatus.BAD_REQUEST,
-        'No logo image uploaded for work update',
-      )
-    }
+    
     req.body = JSON.parse(req.body.data) 
     next()
   },

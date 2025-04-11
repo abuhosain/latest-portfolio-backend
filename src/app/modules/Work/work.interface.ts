@@ -3,7 +3,7 @@ export interface IWork {
   image: string
   title: string
   frontend?: string
-  backedend?: string
+  backend?: string
   liveLink: string
   description: string
   technologies: string[]

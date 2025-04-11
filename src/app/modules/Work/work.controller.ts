@@ -45,7 +45,7 @@ const getWorkById = catchAsync(async (req: Request, res: Response) => {
 const updateWork = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params
   const workData = req.body
-  const file = req.file
+  const file = req?.file
   const result = await WorkServices.updateWorkInDb(id, workData, file)
   sendResponse(res, {
     statusCode: httpStatus.OK,
